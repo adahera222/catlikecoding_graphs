@@ -81,6 +81,6 @@ public class Grapher1 : MonoBehaviour {
 	}
 
 	private static float Sine (float x){
-		return 0.5f + 0.5f * Mathf.Sin(2 * Mathf.PI * x);
+		return 0.5f + 0.5f * Mathf.Sin(2 * Mathf.PI * x + Time.timeSinceLevelLoad);
 	}
 }
