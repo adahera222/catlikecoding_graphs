@@ -11,6 +11,8 @@ public class Grapher3 : MonoBehaviour {
 		Ripple
 	}
 	
+	public bool absolute;
+	public float threshold = 0.5f;
 	public FunctionOption function;
 	public int resolution = 10;
 	
@@ -65,10 +67,20 @@ public class Grapher3 : MonoBehaviour {
 		// set the Y position of the points
 		FunctionDelegate f = functionDelegates[(int)function];
 		float t = Time.timeSinceLevelLoad;
-		for (int i = 0; i < points.Length; i++) {
-			Color c = points[i].color;
-			c.a = f(points[i].position, t);
-			points[i].color = c;
+		
+		if (absolute) {
+			for(int i = 0; i < points.Length; i++){
+				Color c = points[i].color;
+				c.a = f(points[i].position, t) >= threshold ? 1f : 0f;
+				points[i].color = c;
+			}
+		}
+		else {
+			for (int i = 0; i < points.Length; i++) {
+				Color c = points[i].color;
+				c.a = f(points[i].position, t);
+				points[i].color = c;
+			}
 		}
 		
 		particleSystem.SetParticles(points, points.Length);
