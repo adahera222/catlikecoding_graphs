@@ -5,12 +5,18 @@ public class Grapher1 : MonoBehaviour {
 	
 	public int resolution = 10;
 	
+	private int currentResolution;
 	private ParticleSystem.Particle[] points;
 		
 	// Use this for initialization
 	void Start () {
-		points = new ParticleSystem.Particle[resolution];
+		CreatePoints();
+	}
+	
+	private void CreatePoints() {
+		currentResolution = resolution;
 		
+		points = new ParticleSystem.Particle[resolution];		
 		float increment = 1f / (resolution - 1);
 		for(int i = 0; i < resolution; i++){
 			float x = i * increment;
@@ -22,6 +28,10 @@ public class Grapher1 : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (currentResolution != resolution) {
+			CreatePoints();
+		}
+		
 		particleSystem.SetParticles(points, points.Length);
 	}
 }
