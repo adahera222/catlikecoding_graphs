@@ -41,6 +41,10 @@ public class Grapher1 : MonoBehaviour {
 			Vector3 p = points[i].position;
 			p.y = p.x;
 			points[i].position = p;
+			
+			Color c = points[i].color;
+			c.g = p.y;
+			points[i].color = c;
 		}
 		
 		particleSystem.SetParticles(points, points.Length);
