@@ -34,6 +34,9 @@ public class Grapher2 : MonoBehaviour {
 		if (resolution < 2) {
 			resolution = 2;
 		}
+		else if (resolution > 100){
+			resolution = 100;
+		}
 		currentResolution = resolution;
 		
 		points = new ParticleSystem.Particle[resolution * resolution];
@@ -57,7 +60,7 @@ public class Grapher2 : MonoBehaviour {
 		
 		// set the Y position of the points
 		FunctionDelegate f = functionDelegates[(int)function];
-		for (int i = 0; i < resolution; i++) {
+		for (int i = 0; i < points.Length; i++) {
 			Vector3 p = points[i].position;
 			p.y = f(p.x);
 			
