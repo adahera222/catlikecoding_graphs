@@ -96,7 +96,10 @@ public class Grapher3 : MonoBehaviour {
 	}
 	
 	private static float Ripple (Vector3 p, float t) {
-		float squareRadius = (p.x - 0.5f) * (p.x - 0.5f) + (p.z - 0.5f) * (p.z - 0.5f);
-		return 0.5f + Mathf.Sin(15 * Mathf.PI * squareRadius - 2f * t) / (2f + 100f * squareRadius);
+		float squareRadius =
+			(p.x - 0.5f) * (p.x - 0.5f) +
+			(p.y - 0.5f) * (p.y - 0.5f) +
+			(p.z - 0.5f) * (p.z - 0.5f);
+		return Mathf.Sin(4 * Mathf.PI * squareRadius - 2f * t);
 	}
 }
