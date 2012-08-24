@@ -13,7 +13,7 @@ public class Grapher2 : MonoBehaviour {
 	public FunctionOption function;
 	public int resolution = 10;
 	
-	private delegate float FunctionDelegate (float x);
+	private delegate float FunctionDelegate (Vector3 p, float t);
 	private static FunctionDelegate[] functionDelegates = {
 		Linear,
 		Exponential,
@@ -60,9 +60,11 @@ public class Grapher2 : MonoBehaviour {
 		
 		// set the Y position of the points
 		FunctionDelegate f = functionDelegates[(int)function];
+		float t = Time.timeSinceLevelLoad;
 		for (int i = 0; i < points.Length; i++) {
 			Vector3 p = points[i].position;
-			p.y = f(p.x);
+			
+			p.y = f(p, t);
 			
 			points[i].position = p;	
 			Color c = points[i].color;
@@ -73,20 +75,20 @@ public class Grapher2 : MonoBehaviour {
 		particleSystem.SetParticles(points, points.Length);
 	}
 	
-	private static float Linear (float x) {
-		return x;
+	private static float Linear (Vector3 p, float t) {
+		return p.x;
 	}
 	
-	private static float Exponential (float x) {
-		return x * x;
+	private static float Exponential (Vector3 p, float t) {
+		return p.x * p.x;
 	}
 
-	private static float Parabola (float x){
-		x = 2f * x - 1f;
-		return x * x;
+	private static float Parabola (Vector3 p, float t){
+		p.x = 2f * p.x - 1f;
+		return p.x * p.x;
 	}
 
-	private static float Sine (float x){
-		return 0.5f + 0.5f * Mathf.Sin(2 * Mathf.PI * x + Time.timeSinceLevelLoad);
+	private static float Sine (Vector3 p, float t){
+		return 0.5f + 0.5f * Mathf.Sin(2 * Mathf.PI * p.x + t);
 	}
 }
