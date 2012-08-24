@@ -85,10 +85,14 @@ public class Grapher2 : MonoBehaviour {
 
 	private static float Parabola (Vector3 p, float t){
 		p.x = 2f * p.x - 1f;
-		return p.x * p.x;
+		p.z = 2f * p.z - 1f;
+		return 1f - p.x * p.x * p.z * p.z;
 	}
 
 	private static float Sine (Vector3 p, float t){
-		return 0.5f + 0.5f * Mathf.Sin(2 * Mathf.PI * p.x + t);
+		return 0.50f +
+			0.25f * Mathf.Sin(4 * Mathf.PI * p.x + 4 * t) * Mathf.Sin(2 * Mathf.PI * p.z + t) +
+			0.10f * Mathf.Cos(3 * Mathf.PI * p.x + 5 * t) * Mathf.Cos(5 * Mathf.PI * p.z + 3 * t) +
+			0.15f * Mathf.Sin(Mathf.PI * p.x + 0.6f * t);
 	}
 }
