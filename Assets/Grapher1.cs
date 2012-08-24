@@ -3,6 +3,14 @@ using System.Collections;
 
 public class Grapher1 : MonoBehaviour {
 	
+	public enum FunctionOption {
+		Linear,
+		Cubic,
+		Parabola,
+		Sine
+	}
+	
+	public FunctionOption function;
 	public int resolution = 10;
 	
 	private int currentResolution;
@@ -39,7 +47,7 @@ public class Grapher1 : MonoBehaviour {
 		// set the Y position of the points y = x
 		for (int i = 0; i < resolution; i++) {
 			Vector3 p = points[i].position;
-			p.y = p.x;
+			p.y = Linear(p.x);
 			points[i].position = p;
 			
 			Color c = points[i].color;
@@ -48,5 +56,22 @@ public class Grapher1 : MonoBehaviour {
 		}
 		
 		particleSystem.SetParticles(points, points.Length);
+	}
+	
+	private static float Linear (float x) {
+		return x;
+	}
+	
+	private static float Exponential (float x) {
+		return x * x;
+	}
+
+	private static float Parabola (float x){
+		x = 2f * x - 1f;
+		return x * x;
+	}
+
+	private static float Sine (float x){
+		return 0.5f + 0.5f * Mathf.Sin(2 * Mathf.PI * x);
 	}
 }
