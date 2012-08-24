@@ -36,6 +36,13 @@ public class Grapher1 : MonoBehaviour {
 			CreatePoints();
 		}
 		
+		// set the Y position of the points y = x
+		for (int i = 0; i < resolution; i++) {
+			Vector3 p = points[i].position;
+			p.y = p.x;
+			points[i].position = p;
+		}
+		
 		particleSystem.SetParticles(points, points.Length);
 	}
 }
