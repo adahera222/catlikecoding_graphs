@@ -13,6 +13,14 @@ public class Grapher1 : MonoBehaviour {
 	public FunctionOption function;
 	public int resolution = 10;
 	
+	private delegate float FunctionDelegate (float x);
+	private static FunctionDelegate[] functionDelegates = {
+		Linear,
+		Exponential,
+		Parabola,
+		Sine
+	};
+	
 	private int currentResolution;
 	private ParticleSystem.Particle[] points;
 		
@@ -44,12 +52,13 @@ public class Grapher1 : MonoBehaviour {
 			CreatePoints();
 		}
 		
-		// set the Y position of the points y = x
+		// set the Y position of the points
+		FunctionDelegate f = functionDelegates[(int)function];
 		for (int i = 0; i < resolution; i++) {
 			Vector3 p = points[i].position;
-			p.y = Linear(p.x);
-			points[i].position = p;
+			p.y = f(p.x);
 			
+			points[i].position = p;	
 			Color c = points[i].color;
 			c.g = p.y;
 			points[i].color = c;
