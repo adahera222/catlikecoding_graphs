@@ -7,7 +7,8 @@ public class Grapher2 : MonoBehaviour {
 		Linear,
 		Cubic,
 		Parabola,
-		Sine
+		Sine,
+		Ripple
 	}
 	
 	public FunctionOption function;
@@ -18,7 +19,8 @@ public class Grapher2 : MonoBehaviour {
 		Linear,
 		Exponential,
 		Parabola,
-		Sine
+		Sine,
+		Ripple
 	};
 	
 	private int currentResolution;
@@ -83,16 +85,21 @@ public class Grapher2 : MonoBehaviour {
 		return p.x * p.x;
 	}
 
-	private static float Parabola (Vector3 p, float t){
+	private static float Parabola (Vector3 p, float t) {
 		p.x = 2f * p.x - 1f;
 		p.z = 2f * p.z - 1f;
 		return 1f - p.x * p.x * p.z * p.z;
 	}
 
-	private static float Sine (Vector3 p, float t){
+	private static float Sine (Vector3 p, float t) {
 		return 0.50f +
 			0.25f * Mathf.Sin(4 * Mathf.PI * p.x + 4 * t) * Mathf.Sin(2 * Mathf.PI * p.z + t) +
 			0.10f * Mathf.Cos(3 * Mathf.PI * p.x + 5 * t) * Mathf.Cos(5 * Mathf.PI * p.z + 3 * t) +
 			0.15f * Mathf.Sin(Mathf.PI * p.x + 0.6f * t);
+	}
+	
+	private static float Ripple (Vector3 p, float t) {
+		float squareRadius = (p.x - 0.5f) * (p.x - 0.5f) + (p.z - 0.5f) * (p.z - 0.5f);
+		return 0.5f + Mathf.Sin(15 * Mathf.PI * squareRadius - 2f * t) / (2f + 100f * squareRadius);
 	}
 }
