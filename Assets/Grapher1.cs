@@ -14,6 +14,10 @@ public class Grapher1 : MonoBehaviour {
 	}
 	
 	private void CreatePoints() {
+		// prevent divide by zero
+		if (resolution < 2) {
+			resolution = 2;
+		}
 		currentResolution = resolution;
 		
 		points = new ParticleSystem.Particle[resolution];		
